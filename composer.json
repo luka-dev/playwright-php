@@ -1,0 +1,14 @@
+{
+  "name": "luka/playwright-php",
+  "description": "A PHP Module, that help with generating of task script for playwright and send it node.js",
+  "authors": [
+    {
+      "name": "luka",
+      "email": "leandr1999@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.1.0",
+    "ext-json": "*"
+  }
+}
