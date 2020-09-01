@@ -1,14 +1,23 @@
 {
   "name": "luka/playwright-php",
   "description": "A PHP Module, that help with generating of task script for playwright and send it node.js",
+  "type": "library",
+  "license": "MIT",
   "authors": [
     {
       "name": "luka",
       "email": "leandr1999@gmail.com"
     }
   ],
+  "autoload": {
+    "classmap": [
+      "src"
+    ]
+  },
   "require": {
     "php": ">=7.3",
-    "ext-json": "*"
+    "ext-json": "*",
+    "php-curl-class/php-curl-class": "^8.8",
+    "ext-curl": "*"
   }
 }

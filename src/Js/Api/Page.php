@@ -4,6 +4,7 @@
 namespace PlayWrightClient\Api;
 
 
+use Exception;
 use PlayWrightClient\Api\Structures\Header;
 use PlayWrightClient\Api\Structures\SelectOption;
 use PlayWrightClient\Js\Builder;
@@ -183,12 +184,12 @@ class Page extends Builder
      * @param string|null $name
      * @param string|null $url
      * @return Frame
-     * @throws \Exception
+     * @throws Exception
      */
     public function frame(string $name = null, string $url = null): Frame
     {
         if ($name === null && $url === null) {
-            throw new \Exception('Should be at least one argument.');
+            throw new Exception('Should be at least one argument.');
         }
 
         $args = $name;
@@ -431,7 +432,8 @@ class Page extends Builder
      * @param string $selector
      * @param SelectOption $value
      */
-    public function selectOption(string $selector, SelectOption $value): void {
+    public function selectOption(string $selector, SelectOption $value): void
+    {
         $this->selectOptions($selector, [$value]);
     }
 
@@ -439,7 +441,8 @@ class Page extends Builder
      * @param string $selector
      * @param SelectOption[] $values
      */
-    public function selectOptions(string $selector, array $values): void {
+    public function selectOptions(string $selector, array $values): void
+    {
 
         $valuesSerialized = [];
 
@@ -447,14 +450,15 @@ class Page extends Builder
             $valuesSerialized[] = $value->toArray();
         }
 
-        $builder = Functions::callAwaitSafe("$this->pageVarName.selectOption", $valuesSerialized);
+        $builder = Functions::callAwaitSafe("$this->pageVarName.selectOption", $selector, ...$valuesSerialized);
         $this->merge($builder);
     }
 
     /**
      * @param Header[] $headers
      */
-    public function setExtraHTTPHeaders(array $headers): void {
+    public function setExtraHTTPHeaders(array $headers): void
+    {
 
         $headersSerialized = [];
 
@@ -470,7 +474,8 @@ class Page extends Builder
      * @param int $width
      * @param int $height
      */
-    public function setViewportSize(int $width, int $height): void {
+    public function setViewportSize(int $width, int $height): void
+    {
 
         $options = [
             'width' => $width,
@@ -603,25 +608,6 @@ class Page extends Builder
         $builder = Functions::callAwaitSafe("$this->pageVarName.waitForSelector", $selector, $options);
         $this->merge($builder);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

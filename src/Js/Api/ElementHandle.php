@@ -4,6 +4,7 @@
 namespace PlayWrightClient\Api;
 
 
+use PlayWrightClient\Api\Structures\SelectOption;
 use PlayWrightClient\Js\Builder;
 use PlayWrightClient\Js\Functions;
 
@@ -113,6 +114,128 @@ class ElementHandle extends Builder
         ];
 
         $builder = Functions::callAwaitSafe("$this->elementVarName.focus", $selector, $options);
+        $this->merge($builder);
+    }
+
+    /**
+     * @param string $selector
+     * @param string $name
+     * @param string $varName
+     */
+    public function getAttributeToVar(string $selector, string $name, string $varName): void
+    {
+        $builder = Functions::callAwaitSafe("$this->elementVarName.getAttribute", $selector, $name);
+        $builder->toVar($varName);
+
+        $this->merge($builder);
+    }
+
+    /**
+     * @param string $selector
+     * @param string[] $modifiers <Array<"Alt"|"Control"|"Meta"|"Shift">>
+     * @param bool $force
+     * @param int $timeout
+     */
+    public function hover(string $selector, array $modifiers = [], bool $force = false, int $timeout = 30000): void
+    {
+
+        $options = [
+            'modifiers' => $modifiers,
+            'force' => $force,
+            'timeout' => $timeout,
+        ];
+
+        $builder = Functions::callAwaitSafe("$this->elementVarName.hover", $selector, $options);
+        $this->merge($builder);
+    }
+
+    /**
+     * Focuses the element, and then uses keyboard.down and keyboard.up.
+     * @param string $key ArrowLeft or a
+     * @param int $delay
+     * @param int $timeout
+     */
+    public function press(string $key, int $delay = 0, int $timeout = 30000): void
+    {
+        $options = [
+            'delay' => $delay,
+            'timeout' => $timeout,
+        ];
+
+        $builder = Functions::callAwaitSafe("$this->elementVarName.press", $key, $options);
+        $this->merge($builder);
+    }
+
+
+    public function scrollIntoViewIfNeeded(int $timeout = 30000): void
+    {
+        $options = [
+            'timeout' => $timeout,
+        ];
+
+        $builder = Functions::callAwaitSafe("$this->elementVarName.scrollIntoViewIfNeeded", $options);
+        $this->merge($builder);
+    }
+
+    /**
+     * @param string $selector
+     * @param SelectOption $value
+     */
+    public function selectOption(string $selector, SelectOption $value): void
+    {
+        $this->selectOptions($selector, [$value]);
+    }
+
+    /**
+     * @param string $selector
+     * @param SelectOption[] $values
+     */
+    public function selectOptions(string $selector, array $values): void
+    {
+
+        $valuesSerialized = [];
+
+        foreach ($values as $value) {
+            $valuesSerialized[] = $value->toArray();
+        }
+
+        $builder = Functions::callAwaitSafe("$this->elementVarName.selectOption", $selector, ...$valuesSerialized);
+        $this->merge($builder);
+    }
+
+    public function selectText(int $timeout = 30000): void
+    {
+        $options = [
+            'timeout' => $timeout,
+        ];
+
+        $builder = Functions::callAwaitSafe("$this->elementVarName.selectText", $options);
+        $this->merge($builder);
+    }
+
+    /**
+     * @param string $varName
+     */
+    public function textContentToVar(string $varName): void
+    {
+        $builder = Functions::callAwaitSafe("$this->elementVarName.textContent");
+        $builder->toVar($varName);
+        $this->merge($builder);
+    }
+
+    /**
+     * @param string $text
+     * @param int $delay
+     * @param int $timeout
+     */
+    public function type(string $text, int $delay = 0, int $timeout = 30000): void
+    {
+        $options = [
+            'delay' => $delay,
+            'timeout' => $timeout,
+        ];
+
+        $builder = Functions::callAwaitSafe("$this->elementVarName.type", $text, $options);
         $this->merge($builder);
     }
 
