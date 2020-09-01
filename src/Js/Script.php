@@ -15,7 +15,7 @@ class Script
      */
     public function __construct(string &$customJsStore = '')
     {
-        $this->jsString = $customJsStore;
+        $this->jsString = &$customJsStore;
     }
 
     /**
