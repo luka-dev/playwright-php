@@ -15,6 +15,7 @@ class Builder extends Script
 
     public function wrapInBrackets(): Builder
     {
+        $this->jsString = rtrim($this->jsString);
         $this->prepend('(', false, false);
         $this->append(')', false, false);
 
