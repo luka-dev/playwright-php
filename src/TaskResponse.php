@@ -5,7 +5,7 @@ class TaskResponse
 {
     private $response;
 
-    public function __construct(array $response)
+    public function __construct(object $response)
     {
         $this->response = $response;
     }
