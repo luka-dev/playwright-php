@@ -15,8 +15,8 @@ class Builder extends Script
 
     public function wrapInBrackets(): Builder
     {
-        $this->prepend('(');
-        $this->append(')');
+        $this->prepend('(', false, false);
+        $this->append(')', false, false);
 
         return $this;
     }
@@ -25,7 +25,7 @@ class Builder extends Script
     {
         $this->wrapInBrackets();
 
-        $this->prepend($funcName);
+        $this->prepend($funcName, false, false);
 
         return $this;
     }
