@@ -3,9 +3,11 @@
 namespace PlayWrightClient\Api;
 
 use PlayWrightClient\Exception\JsError;
-use PlayWrightClient\Js;
+use PlayWrightClient\Js\Builder;
+use PlayWrightClient\Js\Functions;
+use PlayWrightClient\Js\Vars;
 
-class Context extends Js
+class Context extends Builder
 {
 
     private $contextName = 'context';
@@ -50,45 +52,45 @@ class Context extends Js
             'sameSite' => $sameSite,
         ];
 
-        $cookieObject = self::build($data, true);
-
-        $this->safeAwaitAppend("await $this->contextName.addCookies($cookieObject))");
+        $this->merge(Functions::callAwaitSafe("$this->contextName.addCookies", $data));
 
         return $this;
     }
 
     public function clearCookies(): Context
     {
-        $this->safeAwaitAppend("await $this->contextName.clearCookies()");
+        $this->merge(Functions::callAwaitSafe("$this->contextName.clearCookies"));
 
         return $this;
     }
 
     public function clearPermissions(): Context
     {
-        $this->safeAwaitAppend("await $this->contextName.clearPermissions()");
+        $this->merge(Functions::callAwaitSafe("$this->contextName.clearPermissions"));
 
         return $this;
     }
 
     public function close(): Context
     {
-        $this->safeAwaitAppend("await $this->contextName.close()");
+        $this->merge(Functions::callAwaitSafe("$this->contextName.close"));
 
         return $this;
     }
 
     /**
+     * Get cookies array, saved to var by urls list
+     *
      * @param string $varToSave
      * @param string[] $urls
      * @return $this
      */
-    public function cookies(string $varToSave, array $urls): Context
+    public function cookiesToVar(string $varToSave, array $urls): Context
     {
+        $builder = Functions::callAwaitSafe("$this->contextName.cookies", $urls);
+        $builder->toVar($varToSave);
 
-        $this->saveToVar($varToSave, '', false);
-        $this->safeAwaitAppend("await $this->contextName.cookies(" . self::buildList($urls) . ")");
-        $this->append(''); //new line
+        $this->merge($builder);
 
         return $this;
     }
@@ -103,7 +105,7 @@ class Context extends Js
      * 'notifications'
      * 'push'
      * 'camera'
-     * 'microphone'
+     * 'microphone
      * 'background-sync'
      * 'ambient-light-sensor'
      * 'accelerometer'
@@ -118,26 +120,24 @@ class Context extends Js
      */
     public function grantPermissions(array $permissions, string $origin): Context
     {
-
         $options = [
             'origin' => $origin,
         ];
 
-        $this->safeAwaitAppend("await $this->contextName.grantPermissions(" .
-            self::buildList($permissions) . ", " .
-            self::build($options) .
-            ")");
+        $this->merge(Functions::callAwaitSafe("$this->contextName.grantPermissions", $permissions, $options));
+
 
         return $this;
     }
 
     public function newPage(): Page
     {
-        $customVarName = 'page' . self::generateRandomVarName();
+        $customVarName = 'page' . Vars::generateRandomVarName();
 
-        $this->saveToVar($customVarName, '', false);
-        $this->safeAwaitAppend("await $this->contextName.newPage()");
-        $this->append('');
+        $builder = Functions::callAwaitSafe("$this->contextName.newPage");
+        $builder->toVar($customVarName);
+
+        $this->merge($builder);
 
         return new Page($customVarName, $this->jsString);
     }
@@ -148,9 +148,10 @@ class Context extends Js
      */
     public function pageByIndex(int $index): Page
     {
-        $customVarName = 'page' . self::generateRandomVarName();
+        $customVarName = 'page' . Vars::generateRandomVarName();
 
-        $this->saveToVar($customVarName, "(await $this->contextName.page())[$index]");
+        $builder = Functions::callAwaitSafe("$this->contextName.page");
+        $builder->index($index)->toVar($customVarName);
         return new Page($customVarName, $this->jsString);
     }
 
@@ -160,7 +161,8 @@ class Context extends Js
      */
     public function routeAbort(string $rule): Context
     {
-        $this->safeAwaitAppend("await $this->contextName.route($rule, route => route.abort())");
+        $builder = Functions::callAwaitSafe("$this->contextName.route", $rule, 'route => route.abort()');
+        $this->merge($builder);
 
         return $this;
     }
@@ -171,7 +173,7 @@ class Context extends Js
      */
     public function unroute(string $rule): Context
     {
-        $this->safeAwaitAppend("await $this->contextName.unroute($rule)");
+        $this->merge(Functions::callAwaitSafe("$this->contextName.unroute", $rule));
 
         return $this;
     }
@@ -184,7 +186,7 @@ class Context extends Js
             'accuracy' => $accuracy,
         ];
 
-        $this->safeAwaitAppend("await $this->contextName.setGeolocation(" . self::build($data) . ")");
+        $this->merge(Functions::callAwaitSafe("$this->contextName.setGeolocation", $data));
 
         return $this;
     }
@@ -196,20 +198,18 @@ class Context extends Js
             'password' => $password,
         ];
 
-        $this->safeAwaitAppend("await $this->contextName.setHTTPCredentials(" . self::build($data) . ")");
-
+        $this->merge(Functions::callAwaitSafe("$this->contextName.setHTTPCredentials", $data));
         return $this;
     }
 
     public function setOffline(bool $offline): Context
     {
-        $this->safeAwaitAppend("await $this->contextName.setOffline($offline)");
-
+        $this->merge(Functions::callAwaitSafe("$this->contextName.setOffline", $offline));
         return $this;
     }
 
     /**
-     * @param string $event
+     * @param string $event "close" or "page"
      * @param int $timeout milliseconds - 0 to disable
      * @return $this
      */
@@ -217,34 +217,13 @@ class Context extends Js
     {
 
         $data = [
-            'timeout' => $timeout
+            'timeout' => $timeout,
         ];
 
-        $this->safeAwaitAppend("await $this->contextName.waitForEvent("
-            . self::build($event)
-            . ','
-            . self::build($data)
-            . ")");
+        $this->merge(Functions::callAwaitSafe("$this->contextName.waitForEvent", $event, $data));
 
         return $this;
     }
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }
