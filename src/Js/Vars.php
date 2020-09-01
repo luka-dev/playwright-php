@@ -61,12 +61,12 @@ final class Vars
 
     public static function generateRandomVarName(): string
     {
-        srand(microtime());
+        mt_srand(microtime());
         $characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $charactersLength = strlen($characters);
         $randomString = '';
         for ($i = 0; $i < 10; $i++) {
-            $randomString .= $characters[rand(0, $charactersLength - 1)];
+            $randomString .= $characters[random_int(0, $charactersLength - 1)];
         }
         return 'temp' . time() . $randomString;
     }
