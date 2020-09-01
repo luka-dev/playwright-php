@@ -1,5 +1,5 @@
 {
-  "name": "luka/playwright-php",
+  "name": "luka-dev/playwright-php",
   "description": "A PHP Module, that help with generating of task script for playwright and send it node.js",
   "type": "library",
   "license": "MIT",
