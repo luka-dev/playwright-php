@@ -86,7 +86,7 @@ final class Vars
         $data->append(')', false, true);
 
 
-        if (in_array($varName, self::$varNames, true)) {
+        if (!in_array($varName, self::$varNames, true)) {
             $data->prepend($varType . ' ', false, false);
         }
     }
