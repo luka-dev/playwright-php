@@ -85,8 +85,8 @@ final class Vars
         $data->prepend($varName . ' = (', false, false);
         $data->append(')', false, true);
 
-
-        if (!in_array($varName, self::$varNames, true)) {
+        $rootVarName = explode('.', $varName, 2)[0];
+        if (!in_array($rootVarName, self::$varNames, true)) {
             $data->prepend($varType . ' ', false, false);
         }
     }
