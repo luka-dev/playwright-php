@@ -38,7 +38,7 @@ final class Functions
 
         $buildedArgs = self::buildArgs($args);
 
-        $builder->append($funcName . '(' . $buildedArgs . ')', false);
+        $builder->append($funcName . '(' . $buildedArgs . ')', false, false);
 
         return $builder;
     }
