@@ -21,7 +21,7 @@ final class Functions
         $buildedArgs = [];
 
         foreach ($args as $arg) {
-            $buildedArgs = Constructions::build($arg);
+            $buildedArgs[] = Constructions::build($arg);
         }
 
         return implode(',', $buildedArgs);
