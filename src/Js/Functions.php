@@ -38,14 +38,14 @@ final class Functions
 
         $buildedArgs = self::buildArgs($args);
 
-        $builder->append($funcName . '(' . $buildedArgs . ')');
+        $builder->append($funcName . '(' . $buildedArgs . ')', false);
 
         return $builder;
     }
 
     public static function callAwait(string $funcName, ...$args): Builder
     {
-        $builder = self::call($funcName, $args);
+        $builder = self::call($funcName, ...$args);
         $builder->prepend(' ', false, false);
         $builder->prepend('await', false, false);
         return $builder;
@@ -61,7 +61,7 @@ final class Functions
      */
     public static function callAwaitSafe(string $funcName, ...$args): Builder
     {
-        $builder = self::call($funcName, $args);
+        $builder = self::call($funcName, ...$args);
         $builder->wrapInFunction('modules.pss');
         $builder->prepend(' ', false, false);
         $builder->prepend('await', false, false);
