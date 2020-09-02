@@ -15,7 +15,7 @@ class TaskResponse
         return $this->response->status === 'DONE';
     }
 
-    public function getData(): ?array
+    public function getData(): ?object
     {
         return $this->response->data ?? null;
     }
