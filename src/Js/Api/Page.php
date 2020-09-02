@@ -377,24 +377,23 @@ class Page extends Builder
 
         $resVarName = 'resourceTypes' . Vars::generateRandomVarName();
         $resTypes = new Builder();
-        $resTypes->append(Constructions::build($resourceTypes));
+        $resTypes->append(Constructions::build($resourceTypes), false, false);
         $resTypes->toVar($resVarName);
         $script->append($resTypes->getJs());
 
         $hostsVarName = 'allowedHosts' . Vars::generateRandomVarName();
         $hostsArr = new Builder();
-        $hostsArr->append(Constructions::build($allowedHosts));
+        $hostsArr->append(Constructions::build($allowedHosts), false, false);
         $hostsArr->toVar($hostsVarName);
-        $script->append($hostsArr->getJs());
+        $script->append($hostsArr->getJs(), true, false);
 
         $urlsToBlockVarName = 'urlsToBlock' . Vars::generateRandomVarName();
         $urlsToBlockObj = new Builder();
-        $urlsToBlockObj->append(Constructions::build($urlsToBlock));
+        $urlsToBlockObj->append(Constructions::build($urlsToBlock), false, false);
         $urlsToBlockObj->toVar($urlsToBlockVarName);
-        $script->append($urlsToBlockObj->getJs());
+        $script->append($urlsToBlockObj->getJs(), true, false);
 
         $pageVarName = $this->pageVarName;
-
 
         $script->append(<<<JS
     $pageVarName.route('**', route => {
