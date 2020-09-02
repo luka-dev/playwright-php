@@ -491,7 +491,7 @@ class Page extends Builder
      * @param string $varName
      * @param int $timeout
      */
-    public function textContentToVar(string $selector, string $varName, int $timeout = 3000): void
+    public function textContentToVar(string $selector, string $varName, int $timeout = 30000): void
     {
 
         $options = [
@@ -519,7 +519,7 @@ class Page extends Builder
      * @param int $delay
      * @param int $timeout
      */
-    public function type(string $selector, string $text, int $delay = 0, int $timeout = 3000): void
+    public function type(string $selector, string $text, int $delay = 0, int $timeout = 30000): void
     {
 
         $options = [
@@ -535,7 +535,7 @@ class Page extends Builder
      * @param string $selector
      * @param int $timeout
      */
-    public function uncheck(string $selector, int $timeout = 3000): void
+    public function uncheck(string $selector, int $timeout = 30000): void
     {
 
         $options = [
@@ -550,7 +550,7 @@ class Page extends Builder
      * @param string $selector
      * @param int $timeout
      */
-    public function check(string $selector, int $timeout = 3000): void
+    public function check(string $selector, int $timeout = 30000): void
     {
 
         $options = [
@@ -565,7 +565,7 @@ class Page extends Builder
      * @param string $state <"load"|"domcontentloaded"|"networkidle">
      * @param int $timeout
      */
-    public function waitForLoadState(string $state, int $timeout = 3000): void
+    public function waitForLoadState(string $state, int $timeout = 30000): void
     {
 
         $options = [
@@ -580,7 +580,7 @@ class Page extends Builder
      * @param string $waitUntil <"load"|"domcontentloaded"|"networkidle">
      * @param int $timeout
      */
-    public function waitForNavigation(string $waitUntil = 'load', int $timeout = 3000): void
+    public function waitForNavigation(string $waitUntil = 'load', int $timeout = 30000): void
     {
 
         $options = [
@@ -597,7 +597,7 @@ class Page extends Builder
      * @param string $state <"attached"|"detached"|"visible"|"hidden">
      * @param int $timeout
      */
-    public function waitForSelector(string $selector, string $state = 'visible', int $timeout = 3000): void
+    public function waitForSelector(string $selector, string $state = 'visible', int $timeout = 30000): void
     {
 
         $options = [

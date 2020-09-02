@@ -47,7 +47,7 @@ class ElementHandle extends Builder
      * @param string $selector
      * @param int $timeout
      */
-    public function uncheck(string $selector, int $timeout = 3000): void
+    public function uncheck(string $selector, int $timeout = 30000): void
     {
 
         $options = [
@@ -62,7 +62,7 @@ class ElementHandle extends Builder
      * @param string $selector
      * @param int $timeout
      */
-    public function check(string $selector, int $timeout = 3000): void
+    public function check(string $selector, int $timeout = 30000): void
     {
 
         $options = [
