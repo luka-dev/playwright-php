@@ -23,6 +23,11 @@ class Page extends Builder
         parent::__construct($customJsStore);
     }
 
+    public function getPageVarName(): string
+    {
+        return $this->pageVarName;
+    }
+
     /**
      * On runtime can fail if element not founded. Use try catch
      * a.k.a. selectOne

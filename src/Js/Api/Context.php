@@ -57,6 +57,10 @@ class Context extends Builder
         return $this;
     }
 
+    public function getContextVarName(): string {
+        return $this->contextName;
+    }
+
     public function clearCookies(): Context
     {
         $this->merge(Functions::callAwaitSafe("$this->contextName.clearCookies"));
