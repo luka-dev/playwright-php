@@ -14,14 +14,15 @@ final class Functions
 
     /**
      * @param array $args
+     * @param bool $skipNull
      * @return string
      */
-    private static function buildArgs(array $args): string
+    private static function buildArgs(array $args, bool $skipNull = false): string
     {
         $buildedArgs = [];
 
         foreach ($args as $arg) {
-            $buildedArgs[] = Constructions::build($arg);
+            $buildedArgs[] = Constructions::build($arg, $skipNull);
         }
 
         return implode(',', $buildedArgs);
@@ -36,7 +37,7 @@ final class Functions
     {
         $builder = new Builder();
 
-        $buildedArgs = self::buildArgs($args);
+        $buildedArgs = self::buildArgs($args, true);
 
         $builder->append($funcName . '(' . $buildedArgs . ')', false, false);
 
