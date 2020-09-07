@@ -22,8 +22,8 @@ final class Constructions
     public static function build($params, bool $skipNull = false): string
     {
         if ($skipNull && is_array($params)) {
-            array_filter($params, static function ($v) {
-                return !is_null($v);
+            $params = array_filter($params, static function ($value) {
+                return !is_null($value);
             });
         }
 
