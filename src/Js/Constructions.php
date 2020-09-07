@@ -22,12 +22,21 @@ final class Constructions
     public static function build($params, bool $skipNull = false): string
     {
         if ($skipNull && is_array($params)) {
-            $params = array_filter($params, static function ($value) {
-                return !is_null($value);
-            });
+            self::filterNull($params);
         }
 
         return json_encode($params);
+    }
+
+    private static function filterNull(array &$obj): void
+    {
+        foreach ($obj as $key => &$el) {
+            if (is_array($el)) {
+                self::filterNull($el);
+            } else if (is_null($el)) {
+                unset($obj[$key]);
+            }
+        }
     }
 
 
