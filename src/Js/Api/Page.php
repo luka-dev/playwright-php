@@ -78,6 +78,22 @@ class Page extends Builder
         $this->merge($builder);
     }
 
+    /**
+     * @param string $selector
+     * @param string $key F1 - F12, Digit0- Digit9, KeyA- KeyZ, Backquote, Minus, Equal, Backslash, Backspace, Tab, Delete, Escape, ArrowDown, End, Enter, Home, Insert, PageDown, PageUp, ArrowRight, ArrowUp, etc.
+     * @param int $timeout
+     */
+    public function press(string $selector, string $key, int $timeout = 30000): void
+    {
+        $options = [
+            'key' => $key,
+            'timeout' => $timeout,
+        ];
+
+        $builder = Functions::callAwaitSafe("$this->pageVarName.press", $selector, $options);
+        $this->merge($builder);
+    }
+
     public function close(): void
     {
         $builder = Functions::callAwaitSafe("$this->pageVarName.close");
