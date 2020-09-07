@@ -15,7 +15,7 @@ class Context extends Builder
     /**
      * @param string $name
      * @param string $value
-     * @param string|null $url either url or domain / path are required
+     * @param string|null $url either url or domain / path are required (https://example.com)
      * @param string|null $domain either url or domain / path are required
      * @param string|null $path either url or domain / path are required
      * @param int|null $expires Unix time in seconds. *1000 for js
@@ -24,7 +24,7 @@ class Context extends Builder
      * @param string|null $sameSite "Strict"|"Lax"|"None"
      * @return $this
      */
-    public function addCookies(
+    public function addCookie(
         string $name,
         string $value,
         string $url = null,
@@ -52,7 +52,7 @@ class Context extends Builder
             'sameSite' => $sameSite,
         ];
 
-        $this->merge(Functions::callAwaitSafe("$this->contextName.addCookies", $data));
+        $this->merge(Functions::callAwaitSafe("$this->contextName.addCookies", [$data]));
 
         return $this;
     }
