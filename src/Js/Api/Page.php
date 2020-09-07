@@ -91,11 +91,10 @@ class Page extends Builder
     public function press(string $selector, string $key, int $timeout = 30000): void
     {
         $options = [
-            'key' => $key,
             'timeout' => $timeout,
         ];
 
-        $builder = Functions::callAwaitSafe("$this->pageVarName.press", $selector, $options);
+        $builder = Functions::callAwaitSafe("$this->pageVarName.press", $selector, $key, $options);
         $this->merge($builder);
     }
 
