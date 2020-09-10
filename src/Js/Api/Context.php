@@ -143,7 +143,7 @@ class Context extends Builder
 
         $this->merge($builder);
 
-        return new Page($customVarName, $this->jsString);
+        return new Page($customVarName, $this->jsString, $this->requestTimeout);
     }
 
     /**
@@ -156,7 +156,7 @@ class Context extends Builder
 
         $builder = Functions::callAwaitSafe("$this->contextName.page");
         $builder->index($index)->toVar($customVarName);
-        return new Page($customVarName, $this->jsString);
+        return new Page($customVarName, $this->jsString, $this->requestTimeout);
     }
 
     /**

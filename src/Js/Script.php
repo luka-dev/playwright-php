@@ -8,16 +8,18 @@ class Script
 {
     protected $jsString;
 
-    public $requestTimeout = 30;
+    protected $requestTimeout = 30;
 
     /**
      * Builder constructor.
      * Here can be passed address of shared Builder var storage
      * @param string $customJsStore
+     * @param int $requestTimeout
      */
-    public function __construct(string &$customJsStore = '')
+    public function __construct(string &$customJsStore = '', int $requestTimeout = 30)
     {
         $this->jsString = &$customJsStore;
+        $this->requestTimeout = &$requestTimeout;
     }
 
     /**

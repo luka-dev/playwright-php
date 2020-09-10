@@ -17,10 +17,10 @@ class Page extends Builder
 {
     private $pageVarName;
 
-    public function __construct(string $pageVarName, string &$customJsStore = '')
+    public function __construct(string $pageVarName, string &$customJsStore = '', int $requestTimeout = 30)
     {
         $this->pageVarName = $pageVarName;
-        parent::__construct($customJsStore);
+        parent::__construct($customJsStore, $requestTimeout);
     }
 
     public function getPageVarName(): string
@@ -43,7 +43,7 @@ class Page extends Builder
         $builder->toVar($customVarName);
         $this->merge($builder);
 
-        return new ElementHandle($customVarName, $this->jsString);
+        return new ElementHandle($customVarName, $this->jsString, $this->requestTimeout);
     }
 
 //    /**
@@ -240,7 +240,7 @@ class Page extends Builder
         $builder->toVar($frameVar);
         $this->merge($builder);
 
-        return new Frame($frameVar, $this->jsString);
+        return new Frame($frameVar, $this->jsString, $this->requestTimeout);
     }
 
     //todo add "frames"
@@ -390,7 +390,7 @@ class Page extends Builder
 
         $this->merge($builder);
 
-        return new Page($customVarName, $this->jsString);
+        return new Page($customVarName, $this->jsString, $this->requestTimeout);
     }
 
     /**

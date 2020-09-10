@@ -12,10 +12,10 @@ class ElementHandle extends Builder
 {
     private $elementVarName;
 
-    public function __construct(string $elementVarName, string &$customJsStore = '')
+    public function __construct(string $elementVarName, string &$customJsStore = '', int &$requestTimeout = 30)
     {
         $this->elementVarName = $elementVarName;
-        parent::__construct($customJsStore);
+        parent::__construct($customJsStore, $requestTimeout);
     }
 
 
