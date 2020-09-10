@@ -8,6 +8,8 @@ class Script
 {
     protected $jsString;
 
+    public $requestTimeout = 30;
+
     /**
      * Builder constructor.
      * Here can be passed address of shared Builder var storage
@@ -64,5 +66,20 @@ class Script
     public function getJs(): string
     {
         return $this->jsString;
+    }
+
+    public function addToTimeout(int $milliseconds): void
+    {
+        $this->requestTimeout += $milliseconds / 1000;
+    }
+
+    public function setTimeout(int $seconds): void
+    {
+        $this->requestTimeout = $seconds;
+    }
+
+    public function getTimeout(): int
+    {
+        return $this->requestTimeout;
     }
 }

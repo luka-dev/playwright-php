@@ -23,7 +23,6 @@ class TaskServer
     private function getCurl(): Curl
     {
         $curl = new Curl();
-
         if ($this->config->inAuthNeeded()) {
             $curl->setHeader('Authorization', $this->config->getAuthKey());
         }
@@ -39,6 +38,7 @@ class TaskServer
     public function runTask(Script $script): TaskResponse
     {
         $curl = $this->getCurl();
+        $curl->setTimeout($script->getTimeout());
         $curl->setHeader('Content-Type', 'application/x-www-form-urlencoded');
         $curl->post('http://' . $this->config->getConnectionAddress() . '/task', ['script' => $script->getJs()]);
 

@@ -79,6 +79,8 @@ class Page extends Builder
             'timeout' => $timeout,
         ];
 
+        $this->addToTimeout($timeout);
+
         $builder = Functions::callAwaitSafe("$this->pageVarName.click", $selector, $options);
         $this->merge($builder);
     }
@@ -93,6 +95,8 @@ class Page extends Builder
         $options = [
             'timeout' => $timeout,
         ];
+
+        $this->addToTimeout($timeout);
 
         $builder = Functions::callAwaitSafe("$this->pageVarName.press", $selector, $key, $options);
         $this->merge($builder);
@@ -130,6 +134,8 @@ class Page extends Builder
             'force' => $force,
             'timeout' => $timeout,
         ];
+
+        $this->addToTimeout($timeout);
 
         $builder = Functions::callAwaitSafe("$this->pageVarName.dblclick", $selector, $options);
         $this->merge($builder);
@@ -184,6 +190,8 @@ class Page extends Builder
             'timeout' => $timeout,
         ];
 
+        $this->addToTimeout($timeout);
+
         $builder = Functions::callAwaitSafe("$this->pageVarName.fill", $selector, $value, $options);
         $this->merge($builder);
     }
@@ -193,6 +201,8 @@ class Page extends Builder
         $options = [
             'timeout' => $timeout,
         ];
+
+        $this->addToTimeout($timeout);
 
         $builder = Functions::callAwaitSafe("$this->pageVarName.focus", $selector, $options);
         $this->merge($builder);
@@ -259,6 +269,8 @@ class Page extends Builder
             'waitUntil' => $waitUntil,
         ];
 
+        $this->addToTimeout($timeout);
+
         $builder = Functions::callAwaitSafe("$this->pageVarName.goBack", $options);
         $this->merge($builder);
     }
@@ -274,6 +286,8 @@ class Page extends Builder
             'waitUntil' => $waitUntil,
         ];
 
+        $this->addToTimeout($timeout);
+
         $builder = Functions::callAwaitSafe("$this->pageVarName.goForward", $options);
         $this->merge($builder);
     }
@@ -284,7 +298,7 @@ class Page extends Builder
      * @param string $waitUntil "load"|"domcontentloaded"|"networkidle"
      * @param int $timeout
      */
-    public function goto(string $url, string $referer = null, string $waitUntil = 'load', int $timeout = 30000): void
+    public function goto(string $url, string $referer = null, string $waitUntil = 'domcontentloaded', int $timeout = 30000): void
     {
         $options = [
             'timeout' => $timeout,
@@ -294,6 +308,8 @@ class Page extends Builder
         if ($referer !== null) {
             $options['referer'] = $referer;
         }
+
+        $this->addToTimeout($timeout);
 
         $builder = Functions::callAwaitSafe("$this->pageVarName.goto", $url, $options);
         $this->merge($builder);
@@ -314,6 +330,8 @@ class Page extends Builder
             'timeout' => $timeout,
         ];
 
+        $this->addToTimeout($timeout);
+
         $builder = Functions::callAwaitSafe("$this->pageVarName.hover", $selector, $options);
         $this->merge($builder);
     }
@@ -329,6 +347,8 @@ class Page extends Builder
         $options = [
             'timeout' => $timeout,
         ];
+
+        $this->addToTimeout($timeout);
 
         $builder = Functions::callAwaitSafe("$this->pageVarName.innerHTML", $selector, $options);
         $builder->toVar($customVarName);
@@ -346,6 +366,8 @@ class Page extends Builder
         $options = [
             'timeout' => $timeout,
         ];
+
+        $this->addToTimeout($timeout);
 
         $builder = Functions::callAwaitSafe("$this->pageVarName.innerText", $selector, $options);
         $builder->toVar($customVarName);
@@ -381,6 +403,8 @@ class Page extends Builder
             'timeout' => $timeout,
             'waitUntil' => $waitUntil,
         ];
+
+        $this->addToTimeout($timeout);
 
         $builder = Functions::callAwaitSafe("$this->pageVarName.reload", $options);
         $this->merge($builder);
@@ -517,6 +541,8 @@ class Page extends Builder
             'timeout' => $timeout,
         ];
 
+        $this->addToTimeout($timeout);
+
         $builder = Functions::callAwaitSafe("$this->pageVarName.textContent", $selector, $options);
         $builder->toVar($varName);
         $this->merge($builder);
@@ -546,6 +572,8 @@ class Page extends Builder
             'timeout' => $timeout,
         ];
 
+        $this->addToTimeout($timeout);
+
         $builder = Functions::callAwaitSafe("$this->pageVarName.type", $selector, $text, $options);
         $this->merge($builder);
     }
@@ -560,6 +588,8 @@ class Page extends Builder
         $options = [
             'timeout' => $timeout,
         ];
+
+        $this->addToTimeout($timeout);
 
         $builder = Functions::callAwaitSafe("$this->pageVarName.uncheck", $selector, $options);
         $this->merge($builder);
@@ -576,6 +606,8 @@ class Page extends Builder
             'timeout' => $timeout,
         ];
 
+        $this->addToTimeout($timeout);
+
         $builder = Functions::callAwaitSafe("$this->pageVarName.check", $selector, $options);
         $this->merge($builder);
     }
@@ -590,6 +622,8 @@ class Page extends Builder
         $options = [
             'timeout' => $timeout,
         ];
+
+        $this->addToTimeout($timeout);
 
         $builder = Functions::callAwaitSafe("$this->pageVarName.waitForLoadState", $state, $options);
         $this->merge($builder);
@@ -607,6 +641,8 @@ class Page extends Builder
             'waitUntil' => $waitUntil,
         ];
 
+        $this->addToTimeout($timeout);
+
         $builder = Functions::callAwaitSafe("$this->pageVarName.waitForNavigation", $options);
         $this->merge($builder);
     }
@@ -623,6 +659,8 @@ class Page extends Builder
             'timeout' => $timeout,
             'state' => $state,
         ];
+
+        $this->addToTimeout($timeout);
 
         $builder = Functions::callAwaitSafe("$this->pageVarName.waitForSelector", $selector, $options);
         $this->merge($builder);
