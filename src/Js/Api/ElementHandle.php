@@ -15,7 +15,7 @@ class ElementHandle extends Builder
     public function __construct(string $elementVarName, string &$customJsStore = '', int &$requestTimeout = 30)
     {
         $this->elementVarName = $elementVarName;
-        parent::__construct($customJsStore, $requestTimeout);
+        parent::__construct($customJsStore,$requestTimeout);
     }
 
 

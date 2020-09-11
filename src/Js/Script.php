@@ -16,7 +16,7 @@ class Script
      * @param string $customJsStore
      * @param int $requestTimeout
      */
-    public function __construct(string &$customJsStore = '', int $requestTimeout = 30)
+    public function __construct(string &$customJsStore = '', int &$requestTimeout = 30)
     {
         $this->jsString = &$customJsStore;
         $this->requestTimeout = &$requestTimeout;
