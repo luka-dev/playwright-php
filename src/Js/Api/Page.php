@@ -163,7 +163,7 @@ class Page extends Builder
      */
     public function evaluate(Script $script): void
     {
-        $builder = Functions::callAwaitSafe("$this->pageVarName.evaluate", 'function () {' . $script->getJs() . '}');
+        $builder = Functions::callAwaitSafe("$this->pageVarName.evaluate", '(function () {' . $script->getJs() . '})');
 
         $this->merge($builder);
     }
@@ -178,7 +178,7 @@ class Page extends Builder
      */
     public function evaluateToVar(Script $script, string $varName): void
     {
-        $builder = Functions::callAwaitSafe("$this->pageVarName.evaluate", 'function () {' . $script->getJs() . '}');
+        $builder = Functions::callAwaitSafe("$this->pageVarName.evaluate", '(function () {' . $script->getJs() . '})');
         $builder->toVar($varName);
 
         $this->merge($builder);
