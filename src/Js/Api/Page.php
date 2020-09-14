@@ -17,7 +17,7 @@ class Page extends Builder
 {
     private $pageVarName;
 
-    public function __construct(string $pageVarName, string &$customJsStore = '', int $requestTimeout = 30)
+    public function __construct(string $pageVarName, string &$customJsStore = '', int &$requestTimeout = 30)
     {
         $this->pageVarName = $pageVarName;
         parent::__construct($customJsStore, $requestTimeout);
@@ -163,7 +163,7 @@ class Page extends Builder
      */
     public function evaluate(Script $script): void
     {
-        $builder = Functions::callAwaitSafe("$this->pageVarName.evaluate", '(function () {' . $script->getJs() . '})');
+        $builder = Functions::callAwaitSafe("$this->pageVarName.evaluate", '(() => {' . $script->getJs() . '})');
 
         $this->merge($builder);
     }
@@ -178,7 +178,7 @@ class Page extends Builder
      */
     public function evaluateToVar(Script $script, string $varName): void
     {
-        $builder = Functions::callAwaitSafe("$this->pageVarName.evaluate", '(function () {' . $script->getJs() . '})');
+        $builder = Functions::callAwaitSafe("$this->pageVarName.evaluate", '(() => {' . $script->getJs() . '})');
         $builder->toVar($varName);
 
         $this->merge($builder);
