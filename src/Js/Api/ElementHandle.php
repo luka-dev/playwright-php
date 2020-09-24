@@ -18,6 +18,10 @@ class ElementHandle extends Builder
         parent::__construct($customJsStore,$requestTimeout);
     }
 
+    public function getElementVarName(): string
+    {
+        return $this->elementVarName;
+    }
 
     /**
      * @param string $selector
@@ -297,6 +301,11 @@ class ElementHandle extends Builder
         $builder = Functions::callAwaitSafe("$this->elementVarName.innerText", $selector, $options);
         $builder->toVar($customVarName);
         $this->merge($builder);
+    }
+
+    public function boundingBox(): BoundingBox
+    {
+
     }
 
 }
