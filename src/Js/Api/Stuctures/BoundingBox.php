@@ -12,7 +12,7 @@ class BoundingBox extends Builder
 
     public function __construct(string $boundingBoxVarName, string &$customJsStore = '', int &$requestTimeout = 30)
     {
-        $this->$boundingBoxVarName = $boundingBoxVarName;
+        $this->boundingBoxVarName = $boundingBoxVarName;
         parent::__construct($customJsStore,$requestTimeout);
     }
 

@@ -4,9 +4,11 @@
 namespace PlayWrightClient\Api;
 
 
+use PlayWrightClient\Api\Structures\BoundingBox;
 use PlayWrightClient\Api\Structures\SelectOption;
 use PlayWrightClient\Js\Builder;
 use PlayWrightClient\Js\Functions;
+use PlayWrightClient\Js\Vars;
 
 class ElementHandle extends Builder
 {
@@ -305,7 +307,13 @@ class ElementHandle extends Builder
 
     public function boundingBox(): BoundingBox
     {
+        $customVarName = 'boundingBox' . Vars::generateRandomVarName();
 
+        $builder = Functions::callAwaitSafe("$this->elementVarName.boundingBox");
+        $builder->toVar($customVarName);
+        $this->merge($builder);
+
+        return new BoundingBox($customVarName, $this->jsString, $this->requestTimeout);
     }
 
 }
