@@ -666,5 +666,44 @@ class Page extends Builder
         $this->merge($builder);
     }
 
+    /**
+     * @param string $button "left"|"right"|"middle"
+     * @param int $clickCount
+     */
+    public function mouseDown(string $button = 'left', int $clickCount = 1): void {
+        $options = [
+            'button' => $button,
+            'clickCount' => $clickCount,
+        ];
+        $builder = Functions::callAwaitSafe("$this->pageVarName.mouse.down", $options);
+        $this->merge($builder);
+    }
+
+    /**
+     * @param string $button "left"|"right"|"middle"
+     * @param int $clickCount
+     */
+    public function mouseUp(string $button = 'left', int $clickCount = 1): void {
+        $options = [
+            'button' => $button,
+            'clickCount' => $clickCount,
+        ];
+        $builder = Functions::callAwaitSafe("$this->pageVarName.mouse.up", $options);
+        $this->merge($builder);
+    }
+
+    /**
+     * @param string $x
+     * @param string $y
+     * @param int $steps
+     */
+    public function mouseMove(string $x, string $y, int $steps = 1): void {
+        $options = [
+            'steps' => $steps,
+        ];
+        $builder = Functions::callAwaitSafe("$this->pageVarName.mouse.move", $x, $y, $options);
+        $this->merge($builder);
+    }
+
 
 }
