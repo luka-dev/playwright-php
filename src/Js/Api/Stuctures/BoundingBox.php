@@ -6,14 +6,13 @@ namespace PlayWrightClient\Api\Structures;
 
 use PlayWrightClient\Js\Builder;
 
-class BoundingBox extends Builder
+class BoundingBox
 {
     private $boundingBoxVarName;
 
-    public function __construct(string $boundingBoxVarName, string &$customJsStore = '', int &$requestTimeout = 30)
+    public function __construct(string $boundingBoxVarName)
     {
         $this->boundingBoxVarName = $boundingBoxVarName;
-        parent::__construct($customJsStore,$requestTimeout);
     }
 
     public function getBoundingBoxVarName(): string
