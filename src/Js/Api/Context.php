@@ -52,7 +52,7 @@ class Context extends Builder
             'sameSite' => $sameSite,
         ];
 
-        $this->merge(Functions::callAwaitSafe("$this->contextName.addCookies", [$data]));
+        $this->merge(Functions::callAwait("$this->contextName.addCookies", [$data]));
 
         return $this;
     }
@@ -63,21 +63,21 @@ class Context extends Builder
 
     public function clearCookies(): Context
     {
-        $this->merge(Functions::callAwaitSafe("$this->contextName.clearCookies"));
+        $this->merge(Functions::callAwait("$this->contextName.clearCookies"));
 
         return $this;
     }
 
     public function clearPermissions(): Context
     {
-        $this->merge(Functions::callAwaitSafe("$this->contextName.clearPermissions"));
+        $this->merge(Functions::callAwait("$this->contextName.clearPermissions"));
 
         return $this;
     }
 
     public function close(): Context
     {
-        $this->merge(Functions::callAwaitSafe("$this->contextName.close"));
+        $this->merge(Functions::callAwait("$this->contextName.close"));
 
         return $this;
     }
@@ -91,7 +91,7 @@ class Context extends Builder
      */
     public function cookiesToVar(string $varToSave, array $urls): Context
     {
-        $builder = Functions::callAwaitSafe("$this->contextName.cookies", $urls);
+        $builder = Functions::callAwait("$this->contextName.cookies", $urls);
         $builder->toVar($varToSave);
 
         $this->merge($builder);
@@ -128,7 +128,7 @@ class Context extends Builder
             'origin' => $origin,
         ];
 
-        $this->merge(Functions::callAwaitSafe("$this->contextName.grantPermissions", $permissions, $options));
+        $this->merge(Functions::callAwait("$this->contextName.grantPermissions", $permissions, $options));
 
 
         return $this;
@@ -138,7 +138,7 @@ class Context extends Builder
     {
         $customVarName = 'page' . Vars::generateRandomVarName();
 
-        $builder = Functions::callAwaitSafe("$this->contextName.newPage");
+        $builder = Functions::callAwait("$this->contextName.newPage");
         $builder->toVar($customVarName);
 
         $this->merge($builder);
@@ -154,7 +154,7 @@ class Context extends Builder
     {
         $customVarName = 'page' . Vars::generateRandomVarName();
 
-        $builder = Functions::callAwaitSafe("$this->contextName.page");
+        $builder = Functions::callAwait("$this->contextName.page");
         $builder->index($index)->toVar($customVarName);
         return new Page($customVarName, $this->jsString, $this->requestTimeout);
     }
@@ -165,7 +165,7 @@ class Context extends Builder
      */
     public function routeAbort(string $rule): Context
     {
-        $builder = Functions::callAwaitSafe("$this->contextName.route", $rule, 'route => route.abort()');
+        $builder = Functions::callAwait("$this->contextName.route", $rule, 'route => route.abort()');
         $this->merge($builder);
 
         return $this;
@@ -177,7 +177,7 @@ class Context extends Builder
      */
     public function unroute(string $rule): Context
     {
-        $this->merge(Functions::callAwaitSafe("$this->contextName.unroute", $rule));
+        $this->merge(Functions::callAwait("$this->contextName.unroute", $rule));
 
         return $this;
     }
@@ -190,7 +190,7 @@ class Context extends Builder
             'accuracy' => $accuracy,
         ];
 
-        $this->merge(Functions::callAwaitSafe("$this->contextName.setGeolocation", $data));
+        $this->merge(Functions::callAwait("$this->contextName.setGeolocation", $data));
 
         return $this;
     }
@@ -202,13 +202,13 @@ class Context extends Builder
             'password' => $password,
         ];
 
-        $this->merge(Functions::callAwaitSafe("$this->contextName.setHTTPCredentials", $data));
+        $this->merge(Functions::callAwait("$this->contextName.setHTTPCredentials", $data));
         return $this;
     }
 
     public function setOffline(bool $offline): Context
     {
-        $this->merge(Functions::callAwaitSafe("$this->contextName.setOffline", $offline));
+        $this->merge(Functions::callAwait("$this->contextName.setOffline", $offline));
         return $this;
     }
 
@@ -224,7 +224,7 @@ class Context extends Builder
             'timeout' => $timeout,
         ];
 
-        $this->merge(Functions::callAwaitSafe("$this->contextName.waitForEvent", $event, $data));
+        $this->merge(Functions::callAwait("$this->contextName.waitForEvent", $event, $data));
 
         return $this;
     }

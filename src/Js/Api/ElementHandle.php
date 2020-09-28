@@ -45,7 +45,7 @@ class ElementHandle extends Builder
             'timeout' => $timeout,
         ];
 
-        $builder = Functions::callAwaitSafe("$this->elementVarName.click", $selector, $options);
+        $builder = Functions::callAwait("$this->elementVarName.click", $selector, $options);
         $this->merge($builder);
     }
 
@@ -62,7 +62,7 @@ class ElementHandle extends Builder
 
         $this->addToTimeout($timeout);
 
-        $builder = Functions::callAwaitSafe("$this->elementVarName.uncheck", $selector, $options);
+        $builder = Functions::callAwait("$this->elementVarName.uncheck", $selector, $options);
         $this->merge($builder);
     }
 
@@ -79,7 +79,7 @@ class ElementHandle extends Builder
 
         $this->addToTimeout($timeout);
 
-        $builder = Functions::callAwaitSafe("$this->elementVarName.check", $selector, $options);
+        $builder = Functions::callAwait("$this->elementVarName.check", $selector, $options);
         $this->merge($builder);
     }
 
@@ -105,7 +105,7 @@ class ElementHandle extends Builder
 
         $this->addToTimeout($timeout);
 
-        $builder = Functions::callAwaitSafe("$this->elementVarName.dblclick", $selector, $options);
+        $builder = Functions::callAwait("$this->elementVarName.dblclick", $selector, $options);
         $this->merge($builder);
     }
 
@@ -118,7 +118,7 @@ class ElementHandle extends Builder
         $this->addToTimeout($timeout);
 
 
-        $builder = Functions::callAwaitSafe("$this->elementVarName.fill", $selector, $value, $options);
+        $builder = Functions::callAwait("$this->elementVarName.fill", $selector, $value, $options);
         $this->merge($builder);
     }
 
@@ -131,7 +131,7 @@ class ElementHandle extends Builder
         $this->addToTimeout($timeout);
 
 
-        $builder = Functions::callAwaitSafe("$this->elementVarName.focus", $selector, $options);
+        $builder = Functions::callAwait("$this->elementVarName.focus", $selector, $options);
         $this->merge($builder);
     }
 
@@ -142,7 +142,7 @@ class ElementHandle extends Builder
      */
     public function getAttributeToVar(string $selector, string $name, string $varName): void
     {
-        $builder = Functions::callAwaitSafe("$this->elementVarName.getAttribute", $selector, $name);
+        $builder = Functions::callAwait("$this->elementVarName.getAttribute", $selector, $name);
         $builder->toVar($varName);
 
         $this->merge($builder);
@@ -165,7 +165,7 @@ class ElementHandle extends Builder
 
         $this->addToTimeout($timeout);
 
-        $builder = Functions::callAwaitSafe("$this->elementVarName.hover", $selector, $options);
+        $builder = Functions::callAwait("$this->elementVarName.hover", $selector, $options);
         $this->merge($builder);
     }
 
@@ -184,7 +184,7 @@ class ElementHandle extends Builder
 
         $this->addToTimeout($timeout);
 
-        $builder = Functions::callAwaitSafe("$this->elementVarName.press", $key, $options);
+        $builder = Functions::callAwait("$this->elementVarName.press", $key, $options);
         $this->merge($builder);
     }
 
@@ -197,7 +197,7 @@ class ElementHandle extends Builder
 
         $this->addToTimeout($timeout);
 
-        $builder = Functions::callAwaitSafe("$this->elementVarName.scrollIntoViewIfNeeded", $options);
+        $builder = Functions::callAwait("$this->elementVarName.scrollIntoViewIfNeeded", $options);
         $this->merge($builder);
     }
 
@@ -223,7 +223,7 @@ class ElementHandle extends Builder
             $valuesSerialized[] = $value->toArray();
         }
 
-        $builder = Functions::callAwaitSafe("$this->elementVarName.selectOption", $selector, ...$valuesSerialized);
+        $builder = Functions::callAwait("$this->elementVarName.selectOption", $selector, ...$valuesSerialized);
         $this->merge($builder);
     }
 
@@ -235,7 +235,7 @@ class ElementHandle extends Builder
 
         $this->addToTimeout($timeout);
 
-        $builder = Functions::callAwaitSafe("$this->elementVarName.selectText", $options);
+        $builder = Functions::callAwait("$this->elementVarName.selectText", $options);
         $this->merge($builder);
     }
 
@@ -244,7 +244,7 @@ class ElementHandle extends Builder
      */
     public function textContentToVar(string $varName): void
     {
-        $builder = Functions::callAwaitSafe("$this->elementVarName.textContent");
+        $builder = Functions::callAwait("$this->elementVarName.textContent");
         $builder->toVar($varName);
         $this->merge($builder);
     }
@@ -263,7 +263,7 @@ class ElementHandle extends Builder
 
         $this->addToTimeout($timeout);
 
-        $builder = Functions::callAwaitSafe("$this->elementVarName.type", $text, $options);
+        $builder = Functions::callAwait("$this->elementVarName.type", $text, $options);
         $this->merge($builder);
     }
 
@@ -281,7 +281,7 @@ class ElementHandle extends Builder
 
         $this->addToTimeout($timeout);
 
-        $builder = Functions::callAwaitSafe("$this->elementVarName.innerHTML", $selector, $options);
+        $builder = Functions::callAwait("$this->elementVarName.innerHTML", $selector, $options);
         $builder->toVar($customVarName);
         $this->merge($builder);
     }
@@ -300,7 +300,7 @@ class ElementHandle extends Builder
 
         $this->addToTimeout($timeout);
 
-        $builder = Functions::callAwaitSafe("$this->elementVarName.innerText", $selector, $options);
+        $builder = Functions::callAwait("$this->elementVarName.innerText", $selector, $options);
         $builder->toVar($customVarName);
         $this->merge($builder);
     }
@@ -309,7 +309,7 @@ class ElementHandle extends Builder
     {
         $customVarName = 'boundingBox' . Vars::generateRandomVarName();
 
-        $builder = Functions::callAwaitSafe("$this->elementVarName.boundingBox");
+        $builder = Functions::callAwait("$this->elementVarName.boundingBox");
         $builder->toVar($customVarName);
         $this->merge($builder);
 

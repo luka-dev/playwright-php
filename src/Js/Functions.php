@@ -52,22 +52,22 @@ final class Functions
         return $builder;
     }
 
-    /**
-     * RECOMMENDED
-     * this call, in case error, can be catched by simple try->catch
-     *
-     * @param string $funcName
-     * @param mixed ...$args
-     * @return Builder
-     */
-    public static function callAwaitSafe(string $funcName, ...$args): Builder
-    {
-        $builder = self::call($funcName, ...$args);
-        $builder->wrapInFunction('modules.pss');
-        $builder->prepend(' ', false, false);
-        $builder->prepend('await', false, false);
-        return $builder;
-    }
+//    /**
+//     * RECOMMENDED
+//     * this call, in case error, can be catched by simple try->catch
+//     *
+//     * @param string $funcName
+//     * @param mixed ...$args
+//     * @return Builder
+//     */
+//    public static function callAwaitSafe(string $funcName, ...$args): Builder
+//    {
+//        $builder = self::call($funcName, ...$args);
+//        $builder->wrapInFunction('modules.pss');
+//        $builder->prepend(' ', false, false);
+//        $builder->prepend('await', false, false);
+//        return $builder;
+//    }
 
 
 }

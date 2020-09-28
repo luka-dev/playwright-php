@@ -39,7 +39,7 @@ class Page extends Builder
     {
         $customVarName = 'element' . Vars::generateRandomVarName();
 
-        $builder = Functions::callAwaitSafe("$this->pageVarName.$", $selector);
+        $builder = Functions::callAwait("$this->pageVarName.$", $selector);
         $builder->toVar($customVarName);
         $this->merge($builder);
 
@@ -54,7 +54,7 @@ class Page extends Builder
 //    {
 //        //todo rework array stuff
 //
-//        $builder = Functions::callAwaitSafe("$this->pageVarName.$$", $selector);
+//        $builder = Functions::callAwait("$this->pageVarName.$$", $selector);
 //        $builder->toVar($varName);
 //        $this->merge($builder);
 //    }
@@ -81,7 +81,7 @@ class Page extends Builder
 
         $this->addToTimeout($timeout);
 
-        $builder = Functions::callAwaitSafe("$this->pageVarName.click", $selector, $options);
+        $builder = Functions::callAwait("$this->pageVarName.click", $selector, $options);
         $this->merge($builder);
     }
 
@@ -98,19 +98,19 @@ class Page extends Builder
 
         $this->addToTimeout($timeout);
 
-        $builder = Functions::callAwaitSafe("$this->pageVarName.press", $selector, $key, $options);
+        $builder = Functions::callAwait("$this->pageVarName.press", $selector, $key, $options);
         $this->merge($builder);
     }
 
     public function close(): void
     {
-        $builder = Functions::callAwaitSafe("$this->pageVarName.close");
+        $builder = Functions::callAwait("$this->pageVarName.close");
         $this->merge($builder);
     }
 
     public function contentToVar(string $varName): void
     {
-        $builder = Functions::callAwaitSafe("$this->pageVarName.content");
+        $builder = Functions::callAwait("$this->pageVarName.content");
         $builder->toVar($varName);
         $this->merge($builder);
     }
@@ -137,7 +137,7 @@ class Page extends Builder
 
         $this->addToTimeout($timeout);
 
-        $builder = Functions::callAwaitSafe("$this->pageVarName.dblclick", $selector, $options);
+        $builder = Functions::callAwait("$this->pageVarName.dblclick", $selector, $options);
         $this->merge($builder);
     }
 
@@ -153,7 +153,7 @@ class Page extends Builder
             'colorScheme' => $colorScheme,
         ];
 
-        $builder = Functions::callAwaitSafe("$this->pageVarName.dblclick", $options);
+        $builder = Functions::callAwait("$this->pageVarName.dblclick", $options);
         $this->merge($builder);
     }
 
@@ -163,7 +163,7 @@ class Page extends Builder
      */
     public function evaluate(Script $script): void
     {
-        $builder = Functions::callAwaitSafe("$this->pageVarName.evaluate", '(() => {' . $script->getJs() . '})');
+        $builder = Functions::callAwait("$this->pageVarName.evaluate", '(() => {' . $script->getJs() . '})');
 
         $this->merge($builder);
     }
@@ -178,7 +178,7 @@ class Page extends Builder
      */
     public function evaluateToVar(Script $script, string $varName): void
     {
-        $builder = Functions::callAwaitSafe("$this->pageVarName.evaluate", '(() => {' . $script->getJs() . '})');
+        $builder = Functions::callAwait("$this->pageVarName.evaluate", '(() => {' . $script->getJs() . '})');
         $builder->toVar($varName);
 
         $this->merge($builder);
@@ -192,7 +192,7 @@ class Page extends Builder
 
         $this->addToTimeout($timeout);
 
-        $builder = Functions::callAwaitSafe("$this->pageVarName.fill", $selector, $value, $options);
+        $builder = Functions::callAwait("$this->pageVarName.fill", $selector, $value, $options);
         $this->merge($builder);
     }
 
@@ -204,7 +204,7 @@ class Page extends Builder
 
         $this->addToTimeout($timeout);
 
-        $builder = Functions::callAwaitSafe("$this->pageVarName.focus", $selector, $options);
+        $builder = Functions::callAwait("$this->pageVarName.focus", $selector, $options);
         $this->merge($builder);
     }
 
@@ -252,7 +252,7 @@ class Page extends Builder
      */
     public function getAttributeToVar(string $selector, string $name, string $varName): void
     {
-        $builder = Functions::callAwaitSafe("$this->pageVarName.getAttribute", $selector, $name);
+        $builder = Functions::callAwait("$this->pageVarName.getAttribute", $selector, $name);
         $builder->toVar($varName);
 
         $this->merge($builder);
@@ -271,7 +271,7 @@ class Page extends Builder
 
         $this->addToTimeout($timeout);
 
-        $builder = Functions::callAwaitSafe("$this->pageVarName.goBack", $options);
+        $builder = Functions::callAwait("$this->pageVarName.goBack", $options);
         $this->merge($builder);
     }
 
@@ -288,7 +288,7 @@ class Page extends Builder
 
         $this->addToTimeout($timeout);
 
-        $builder = Functions::callAwaitSafe("$this->pageVarName.goForward", $options);
+        $builder = Functions::callAwait("$this->pageVarName.goForward", $options);
         $this->merge($builder);
     }
 
@@ -311,7 +311,7 @@ class Page extends Builder
 
         $this->addToTimeout($timeout);
 
-        $builder = Functions::callAwaitSafe("$this->pageVarName.goto", $url, $options);
+        $builder = Functions::callAwait("$this->pageVarName.goto", $url, $options);
         $this->merge($builder);
     }
 
@@ -332,7 +332,7 @@ class Page extends Builder
 
         $this->addToTimeout($timeout);
 
-        $builder = Functions::callAwaitSafe("$this->pageVarName.hover", $selector, $options);
+        $builder = Functions::callAwait("$this->pageVarName.hover", $selector, $options);
         $this->merge($builder);
     }
 
@@ -350,7 +350,7 @@ class Page extends Builder
 
         $this->addToTimeout($timeout);
 
-        $builder = Functions::callAwaitSafe("$this->pageVarName.innerHTML", $selector, $options);
+        $builder = Functions::callAwait("$this->pageVarName.innerHTML", $selector, $options);
         $builder->toVar($customVarName);
         $this->merge($builder);
     }
@@ -369,7 +369,7 @@ class Page extends Builder
 
         $this->addToTimeout($timeout);
 
-        $builder = Functions::callAwaitSafe("$this->pageVarName.innerText", $selector, $options);
+        $builder = Functions::callAwait("$this->pageVarName.innerText", $selector, $options);
         $builder->toVar($customVarName);
         $this->merge($builder);
     }
@@ -385,7 +385,7 @@ class Page extends Builder
     {
         $customVarName = 'page' . Vars::generateRandomVarName();
 
-        $builder = Functions::callAwaitSafe("$this->pageVarName.opener");
+        $builder = Functions::callAwait("$this->pageVarName.opener");
         $builder->toVar($customVarName);
 
         $this->merge($builder);
@@ -406,7 +406,7 @@ class Page extends Builder
 
         $this->addToTimeout($timeout);
 
-        $builder = Functions::callAwaitSafe("$this->pageVarName.reload", $options);
+        $builder = Functions::callAwait("$this->pageVarName.reload", $options);
         $this->merge($builder);
     }
 
@@ -493,7 +493,7 @@ class Page extends Builder
             $valuesSerialized[] = $value->toArray();
         }
 
-        $builder = Functions::callAwaitSafe("$this->pageVarName.selectOption", $selector, ...$valuesSerialized);
+        $builder = Functions::callAwait("$this->pageVarName.selectOption", $selector, ...$valuesSerialized);
         $this->merge($builder);
     }
 
@@ -509,7 +509,7 @@ class Page extends Builder
             $headersSerialized[] = $header->toArray();
         }
 
-        $builder = Functions::callAwaitSafe("$this->pageVarName.setExtraHTTPHeaders", $headersSerialized);
+        $builder = Functions::callAwait("$this->pageVarName.setExtraHTTPHeaders", $headersSerialized);
         $this->merge($builder);
     }
 
@@ -525,7 +525,7 @@ class Page extends Builder
             'height' => $height,
         ];
 
-        $builder = Functions::callAwaitSafe("$this->pageVarName.setViewportSize", $options);
+        $builder = Functions::callAwait("$this->pageVarName.setViewportSize", $options);
         $this->merge($builder);
     }
 
@@ -543,7 +543,7 @@ class Page extends Builder
 
         $this->addToTimeout($timeout);
 
-        $builder = Functions::callAwaitSafe("$this->pageVarName.textContent", $selector, $options);
+        $builder = Functions::callAwait("$this->pageVarName.textContent", $selector, $options);
         $builder->toVar($varName);
         $this->merge($builder);
     }
@@ -553,7 +553,7 @@ class Page extends Builder
      */
     public function titleToVar(string $varName): void
     {
-        $builder = Functions::callAwaitSafe("$this->pageVarName.title");
+        $builder = Functions::callAwait("$this->pageVarName.title");
         $builder->toVar($varName);
         $this->merge($builder);
     }
@@ -574,7 +574,7 @@ class Page extends Builder
 
         $this->addToTimeout($timeout);
 
-        $builder = Functions::callAwaitSafe("$this->pageVarName.type", $selector, $text, $options);
+        $builder = Functions::callAwait("$this->pageVarName.type", $selector, $text, $options);
         $this->merge($builder);
     }
 
@@ -591,7 +591,7 @@ class Page extends Builder
 
         $this->addToTimeout($timeout);
 
-        $builder = Functions::callAwaitSafe("$this->pageVarName.uncheck", $selector, $options);
+        $builder = Functions::callAwait("$this->pageVarName.uncheck", $selector, $options);
         $this->merge($builder);
     }
 
@@ -608,7 +608,7 @@ class Page extends Builder
 
         $this->addToTimeout($timeout);
 
-        $builder = Functions::callAwaitSafe("$this->pageVarName.check", $selector, $options);
+        $builder = Functions::callAwait("$this->pageVarName.check", $selector, $options);
         $this->merge($builder);
     }
 
@@ -625,7 +625,7 @@ class Page extends Builder
 
         $this->addToTimeout($timeout);
 
-        $builder = Functions::callAwaitSafe("$this->pageVarName.waitForLoadState", $state, $options);
+        $builder = Functions::callAwait("$this->pageVarName.waitForLoadState", $state, $options);
         $this->merge($builder);
     }
 
@@ -643,7 +643,7 @@ class Page extends Builder
 
         $this->addToTimeout($timeout);
 
-        $builder = Functions::callAwaitSafe("$this->pageVarName.waitForNavigation", $options);
+        $builder = Functions::callAwait("$this->pageVarName.waitForNavigation", $options);
         $this->merge($builder);
     }
 
@@ -662,7 +662,7 @@ class Page extends Builder
 
         $this->addToTimeout($timeout);
 
-        $builder = Functions::callAwaitSafe("$this->pageVarName.waitForSelector", $selector, $options);
+        $builder = Functions::callAwait("$this->pageVarName.waitForSelector", $selector, $options);
         $this->merge($builder);
     }
 
@@ -675,7 +675,7 @@ class Page extends Builder
             'button' => $button,
             'clickCount' => $clickCount,
         ];
-        $builder = Functions::callAwaitSafe("$this->pageVarName.mouse.down", $options);
+        $builder = Functions::callAwait("$this->pageVarName.mouse.down", $options);
         $this->merge($builder);
     }
 
@@ -688,7 +688,7 @@ class Page extends Builder
             'button' => $button,
             'clickCount' => $clickCount,
         ];
-        $builder = Functions::callAwaitSafe("$this->pageVarName.mouse.up", $options);
+        $builder = Functions::callAwait("$this->pageVarName.mouse.up", $options);
         $this->merge($builder);
     }
 
@@ -701,7 +701,7 @@ class Page extends Builder
         $options = [
             'steps' => $steps,
         ];
-        $builder = Functions::callAwaitSafe("$this->pageVarName.mouse.move", $x, $y, $options);
+        $builder = Functions::callAwait("$this->pageVarName.mouse.move", $x, $y, $options);
         $this->merge($builder);
     }
 
