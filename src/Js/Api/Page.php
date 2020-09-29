@@ -747,7 +747,8 @@ class Page extends Builder
         $varName = 'page'.Vars::generateRandomVarName();
 
         $getLastPage = new Script();
-        $getLastPage->append("context.pages()[context.pages().length - 1];");
+        $getLastPage->append("context.pages()[context.pages().length - 1]");
+        $this->merge($getLastPage);
 
         Vars::toVar($varName, $getLastPage);
 
