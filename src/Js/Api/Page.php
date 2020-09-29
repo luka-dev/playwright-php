@@ -748,9 +748,8 @@ class Page extends Builder
 
         $getLastPage = new Script();
         $getLastPage->append("context.pages()[context.pages().length - 1]");
-        $this->merge($getLastPage);
-
         Vars::toVar($varName, $getLastPage);
+        $this->merge($getLastPage);
 
         return new Page($varName, $this->jsString);
     }
