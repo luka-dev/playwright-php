@@ -193,7 +193,7 @@ class Page extends Builder
      */
     public function evaluate(Script $script): void
     {
-        $builder = Functions::callAwait("$this->pageVarName.evaluate", 'function() {' . $script->getJs() . '}');
+        $builder = Functions::callAwait("$this->pageVarName.evaluate",$script->getJs());
 
         $this->merge($builder);
     }
@@ -208,7 +208,7 @@ class Page extends Builder
      */
     public function evaluateToVar(Script $script, string $varName): void
     {
-        $builder = Functions::callAwait("$this->pageVarName.evaluate", 'function() {' . $script->getJs() . '}');
+        $builder = Functions::callAwait("$this->pageVarName.evaluate", $script->getJs());
         $builder->toVar($varName);
 
         $this->merge($builder);
@@ -443,9 +443,9 @@ class Page extends Builder
     /**
      * @param array|string[] $resourceTypes
      * @param array $allowedHosts
-     * @param array $urlsToBlock
+     * @param array $pathToBlock ['/example/path.jpg']; no get params
      */
-    public function blockRequests(array $resourceTypes = ['image', 'stylesheet'], array $allowedHosts = [], array $urlsToBlock = []): void
+    public function blockRequests(array $resourceTypes = ['image', 'stylesheet'], array $allowedHosts = [], array $pathToBlock = []): void
     {
         $script = new Script();
 
@@ -461,9 +461,9 @@ class Page extends Builder
         $hostsArr->toVar($hostsVarName);
         $script->append($hostsArr->getJs(), true, false);
 
-        $urlsToBlockVarName = 'urlsToBlock' . Vars::generateRandomVarName();
+        $urlsToBlockVarName = 'pathToBlock' . Vars::generateRandomVarName();
         $urlsToBlockObj = new Builder();
-        $urlsToBlockObj->append(Constructions::build($urlsToBlock), false, false);
+        $urlsToBlockObj->append(Constructions::build($pathToBlock), false, false);
         $urlsToBlockObj->toVar($urlsToBlockVarName);
         $script->append($urlsToBlockObj->getJs(), true, false);
 
@@ -472,6 +472,7 @@ class Page extends Builder
         $script->append(<<<JS
     $pageVarName.route('**', route => {
         let url = route.request().url();
+        let pathname = modules.URL.parse(url).pathname;
         let hostname = modules.URL.parse(url).hostname;
         let doctype = route.request().resourceType();
         
@@ -485,7 +486,7 @@ class Page extends Builder
             needAbort = true;
         } 
         
-        if (!needAbort && $urlsToBlockVarName.includes(url)) {
+        if (!needAbort && $urlsToBlockVarName.includes(pathname)) {
             needAbort = true;
         }
         
@@ -741,13 +742,13 @@ class Page extends Builder
 
     public function catchNewPage(): Page {
         $promise = new Script();
-        $promise->append("await Promise.all([context.waitForEvent('page')]);");
+        $promise->append("await Promise.all([context.waitForEvent('page')])");
         $this->merge($promise);
 
         $varName = 'page'.Vars::generateRandomVarName();
 
         $getLastPage = new Script();
-        $getLastPage->append("context.pages()[context.pages().length - 1]");
+        $getLastPage->append("context.pages()[context.pages().length - 1]", false, false);
         Vars::toVar($varName, $getLastPage);
         $this->merge($getLastPage);
 
