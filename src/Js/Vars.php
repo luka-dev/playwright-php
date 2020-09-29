@@ -72,11 +72,11 @@ final class Vars
 
     /**
      * @param string $varName
-     * @param Builder $data
+     * @param Script $data
      * @param string $varType let|var|const
      * @return void
      */
-    public static function toVar(string $varName, Builder $data, string $varType = 'let'): void
+    public static function toVar(string $varName, Script $data, string $varType = 'let'): void
     {
         if (self::validateVarName($varName)) {
             throw new JsError('invalid var name ' . $varName);
@@ -92,11 +92,11 @@ final class Vars
     }
 
     /**
-     * @param Builder $data
+     * @param Script $data
      * @param string $varType  let|var|const
      * @return string temp var name
      */
-    public static function toTempVar(Builder $data, string $varType = 'let'): string
+    public static function toTempVar(Script $data, string $varType = 'let'): string
     {
         $varName = self::generateRandomVarName();
         self::toVar($varName, $data, $varType);

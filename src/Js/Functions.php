@@ -4,6 +4,8 @@
 namespace PlayWrightClient\Js;
 
 
+use PlayWrightClient\Api\Structures\NativeValue;
+
 final class Functions
 {
 
@@ -22,7 +24,11 @@ final class Functions
         $buildedArgs = [];
 
         foreach ($args as $arg) {
-            $buildedArgs[] = Constructions::build($arg, $skipNull);
+            if ($arg instanceof NativeValue) {
+                $buildedArgs[] = $arg->getData();
+            } else {
+                $buildedArgs[] = Constructions::build($arg, $skipNull);
+            }
         }
 
         return implode(',', $buildedArgs);

@@ -19,7 +19,7 @@ class SelectOption
      */
     private $number = null;
 
-    public function __construct(string $value, string $label, int $number)
+    public function __construct(string $value = null, string $label = null, int $number = null)
     {
         $this->value = $value;
         $this->label = $label;

@@ -6,6 +6,7 @@ namespace PlayWrightClient\Api;
 
 use Exception;
 use PlayWrightClient\Api\Structures\Header;
+use PlayWrightClient\Api\Structures\NativeValue;
 use PlayWrightClient\Api\Structures\SelectOption;
 use PlayWrightClient\Js\Builder;
 use PlayWrightClient\Js\Constructions;
@@ -85,6 +86,23 @@ class Page extends Builder
         $this->merge($builder);
     }
 
+    public function clickAsync(string $selector, string $button = 'left', int $clickCount = 1, int $delay = 0, array $modifiers = [], bool $force = false, int $timeout = 30000): void
+    {
+        $options = [
+            'button' => $button,
+            'clickCount' => $clickCount,
+            'delay' => $delay,
+            'modifiers' => $modifiers,
+            'force' => $force,
+            'timeout' => $timeout,
+        ];
+
+        $this->addToTimeout($timeout);
+
+        $builder = Functions::call("$this->pageVarName.click", $selector, $options);
+        $this->merge($builder);
+    }
+
     /**
      * @param string $selector
      * @param string $key F1 - F12, Digit0- Digit9, KeyA- KeyZ, Backquote, Minus, Equal, Backslash, Backspace, Tab, Delete, Escape, ArrowDown, End, Enter, Home, Insert, PageDown, PageUp, ArrowRight, ArrowUp, etc.
@@ -99,6 +117,18 @@ class Page extends Builder
         $this->addToTimeout($timeout);
 
         $builder = Functions::callAwait("$this->pageVarName.press", $selector, $key, $options);
+        $this->merge($builder);
+    }
+
+    public function pressAsync(string $selector, string $key, int $timeout = 30000): void
+    {
+        $options = [
+            'timeout' => $timeout,
+        ];
+
+        $this->addToTimeout($timeout);
+
+        $builder = Functions::call("$this->pageVarName.press", $selector, $key, $options);
         $this->merge($builder);
     }
 
@@ -163,7 +193,7 @@ class Page extends Builder
      */
     public function evaluate(Script $script): void
     {
-        $builder = Functions::callAwait("$this->pageVarName.evaluate", '(() => {' . $script->getJs() . '})');
+        $builder = Functions::callAwait("$this->pageVarName.evaluate", 'function() {' . $script->getJs() . '}');
 
         $this->merge($builder);
     }
@@ -178,7 +208,7 @@ class Page extends Builder
      */
     public function evaluateToVar(Script $script, string $varName): void
     {
-        $builder = Functions::callAwait("$this->pageVarName.evaluate", '(() => {' . $script->getJs() . '})');
+        $builder = Functions::callAwait("$this->pageVarName.evaluate", 'function() {' . $script->getJs() . '}');
         $builder->toVar($varName);
 
         $this->merge($builder);
@@ -701,9 +731,27 @@ class Page extends Builder
         $options = [
             'steps' => $steps,
         ];
-        $builder = Functions::callAwait("$this->pageVarName.mouse.move", $x, $y, $options);
+
+        $xNative = new NativeValue($x);
+        $yNative = new NativeValue($y);
+
+        $builder = Functions::callAwait("$this->pageVarName.mouse.move", $xNative, $yNative, $options);
         $this->merge($builder);
     }
 
+    public function catchNewPage(): Page {
+        $promise = new Script();
+        $promise->append("await Promise.all([context.waitForEvent('page')]);");
+        $this->merge($promise);
+
+        $varName = 'page'.Vars::generateRandomVarName();
+
+        $getLastPage = new Script();
+        $getLastPage->append("context.pages()[context.pages().length - 1];");
+
+        Vars::toVar($varName, $getLastPage);
+
+        return new Page($varName, $this->jsString);
+    }
 
 }

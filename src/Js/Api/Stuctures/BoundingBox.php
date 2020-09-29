@@ -21,27 +21,27 @@ class BoundingBox
     }
 
     public function x(): string {
-        return $this->boundingBoxVarName.'x';
+        return $this->boundingBoxVarName.'.x';
     }
 
     public function y(): string {
-        return $this->boundingBoxVarName.'x';
+        return $this->boundingBoxVarName.'.x';
     }
 
     public function height(): string {
-        return $this->boundingBoxVarName.'height';
+        return $this->boundingBoxVarName.'.height';
     }
 
     public function width(): string {
-        return $this->boundingBoxVarName.'width';
+        return $this->boundingBoxVarName.'.width';
     }
 
     public function centerHeight(): string
     {
-        return "(($this->boundingBoxVarName.y + $this->boundingBoxVarName.height) / 2)";
+        return "($this->boundingBoxVarName.y + ($this->boundingBoxVarName.height / 2))";
     }
     public function centerWidth(): string
     {
-        return "(($this->boundingBoxVarName.x + $this->boundingBoxVarName.width) / 2)";
+        return "($this->boundingBoxVarName.x + ($this->boundingBoxVarName.width / 2))";
     }
 }
