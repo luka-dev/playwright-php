@@ -198,6 +198,13 @@ class Page extends Builder
         $this->merge($builder);
     }
 
+    public function evaluateAsync(Script $script): void
+    {
+        $builder = Functions::call("$this->pageVarName.evaluate",$script->getJs());
+
+        $this->merge($builder);
+    }
+
     /**
      *
      * exec script in page context and return data to var
