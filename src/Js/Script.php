@@ -4,6 +4,8 @@
 namespace PlayWrightClient\Js;
 
 
+use Exception;
+
 class Script
 {
     protected $jsString;
@@ -83,5 +85,14 @@ class Script
     public function getTimeout(): int
     {
         return $this->requestTimeout;
+    }
+
+    public function loadFromFile(string $pathToJs): void
+    {
+        $content = file_get_contents($pathToJs);
+        if ($content === false) {
+            throw new \RuntimeException('cant read script file');
+        }
+        $this->jsString = $content;
     }
 }
