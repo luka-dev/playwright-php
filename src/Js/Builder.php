@@ -43,7 +43,7 @@ class Builder extends Script
      * @param int $index
      * @return Builder
      */
-    public function index(int $index)
+    public function index(int $index): Builder
     {
         return $this->key((string)$index);
     }
@@ -52,7 +52,7 @@ class Builder extends Script
      * @param string $key
      * @return Builder
      */
-    public function key(string $key)
+    public function key(string $key): Builder
     {
         //removing spacing and commas
         $this->jsString = rtrim($this->jsString, " \t\n\r\0\x0B;");
@@ -60,6 +60,18 @@ class Builder extends Script
         $this->append('[' . $key . ']');
 
         return $this;
+    }
+
+    public function resolve(string $returnVarNameOrExpression = '{}')
+    {
+        $builder = Functions::callAwait("resolve", $returnVarNameOrExpression);
+        $this->merge($builder);
+    }
+
+    public function reject(string $returnVarNameOrExpression = '{}')
+    {
+        $builder = Functions::callAwait("reject", $returnVarNameOrExpression);
+        $this->merge($builder);
     }
 
 }
