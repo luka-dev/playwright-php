@@ -64,14 +64,12 @@ class Builder extends Script
 
     public function resolve(string $returnVarNameOrExpression = '{}')
     {
-        $builder = Functions::callAwait("resolve", $returnVarNameOrExpression);
-        $this->merge($builder);
+        $this->append('resolve('.$returnVarNameOrExpression.');');
     }
 
     public function reject(string $returnVarNameOrExpression = '{}')
     {
-        $builder = Functions::callAwait("reject", $returnVarNameOrExpression);
-        $this->merge($builder);
+        $this->append('reject('.$returnVarNameOrExpression.');');
     }
 
 }
