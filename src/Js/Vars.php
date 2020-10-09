@@ -14,7 +14,7 @@ final class Vars
         throw new \RuntimeException("can't create an instance");
     }
 
-    private static $varNames = ['data'];
+    private static $varNames = [];
 
     private static $blacklistOfNames = [
         'require',
