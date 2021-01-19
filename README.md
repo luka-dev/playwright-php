@@ -14,11 +14,14 @@ Code example
 ```php
 $config = new \ConnectionConfig('localhost');
 $taskServer = new \TaskServer($config);
+
 $script = new Context();
+
 $page = $script->newPage();
 $page->goto('https://2ip.ru/');
 $element = $page->query('div.ip');
-$element->textContentToVar('data.ip');
+$element->textContentToVar('ip');
+$script->resolve('ip');
+
 $response = $taskServer->runTask($script);
-$response->getData();
 ```
