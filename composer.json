@@ -17,7 +17,7 @@
   "require": {
     "php": ">=7.3",
     "ext-json": "*",
-    "php-curl-class/php-curl-class": "^8.8",
+    "php-curl-class/php-curl-class": "8.* || 9.*",
     "ext-curl": "*"
    },
   "require-dev": {
