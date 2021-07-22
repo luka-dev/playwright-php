@@ -25,7 +25,7 @@ class TaskServer
             $contextConfig = new ContextConfig();
         }
 
-        $this->connectionConfig = $contextConfig;
+        $this->contextConfig = $contextConfig;
     }
 
     /**
