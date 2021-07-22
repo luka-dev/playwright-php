@@ -10,11 +10,22 @@ class TaskServer
     /**
      * @var ConnectionConfig
      */
-    private $config;
+    private $connectionConfig;
 
-    public function __construct(ConnectionConfig $config)
+    /**
+     * @var ContextConfig
+     */
+    private $contextConfig;
+
+    public function __construct(ConnectionConfig $connectionConfig, ?ContextConfig $contextConfig)
     {
-        $this->config = $config;
+        $this->connectionConfig = $connectionConfig;
+
+        if ($contextConfig === null) {
+            $contextConfig = new ContextConfig();
+        }
+
+        $this->connectionConfig = $contextConfig;
     }
 
     /**
@@ -23,8 +34,8 @@ class TaskServer
     private function getCurl(): Curl
     {
         $curl = new Curl();
-        if ($this->config->inAuthNeeded()) {
-            $curl->setHeader('Authorization', $this->config->getAuthKey());
+        if ($this->connectionConfig->inAuthNeeded()) {
+            $curl->setHeader('Authorization', $this->connectionConfig->getAuthKey());
         }
 
         return $curl;
@@ -40,7 +51,10 @@ class TaskServer
         $curl = $this->getCurl();
         $curl->setTimeout($script->getTimeout());
         $curl->setHeader('Content-Type', 'application/x-www-form-urlencoded');
-        $curl->post('http://' . $this->config->getConnectionAddress() . '/task', ['script' => $script->getJs()]);
+        $curl->post('http://' . $this->connectionConfig->getConnectionAddress() . '/task', [
+            'options' => $this->contextConfig->toArray(),
+            'script' => $script->getJs()
+        ]);
 
         if ($curl->error) {
             throw new ConnectionError('cant connect to server');
@@ -58,7 +72,7 @@ class TaskServer
     public function getStats(): array
     {
         $curl = $this->getCurl();
-        $curl->get('http://' . $this->config->getConnectionAddress() . '/stats');
+        $curl->get('http://' . $this->connectionConfig->getConnectionAddress() . '/stats');
 
         if ($curl->error) {
             throw new ConnectionError('cant connect to server');
