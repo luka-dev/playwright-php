@@ -50,7 +50,7 @@ class TaskServer
     {
         $curl = $this->getCurl();
         $curl->setTimeout($script->getTimeout());
-        $curl->setHeader('Content-Type', 'application/x-www-form-urlencoded');
+        $curl->setHeader('Content-Type', 'application/json');
         $curl->post('http://' . $this->connectionConfig->getConnectionAddress() . '/task', [
             'options' => $this->contextConfig->toArray(),
             'script' => $script->getJs()
