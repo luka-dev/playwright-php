@@ -17,7 +17,7 @@ class TaskServer
      */
     private $contextConfig;
 
-    public function __construct(ConnectionConfig $connectionConfig, ?ContextConfig $contextConfig)
+    public function __construct(ConnectionConfig $connectionConfig, ?ContextConfig $contextConfig = null)
     {
         $this->connectionConfig = $connectionConfig;
 

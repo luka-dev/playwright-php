@@ -12,8 +12,20 @@ All detailed information [here](https://github.com/luka-dev/playwright-task-serv
 
 Code example
 ```php
-$config = new \ConnectionConfig('localhost');
-$taskServer = new \TaskServer($config);
+$connectionConfig = new \ConnectionConfig('localhost');
+
+$contextConfig = new ContextConfig();
+
+$contextConfig->setUserAgent('Custom UserAgent');
+$contextConfig->setProxy(
+    'protocol://address:port',
+    null,
+    'username',
+    'password'
+);
+
+
+$taskServer = new \TaskServer($connectionConfig, $contextConfig);
 
 $script = new Context();
 
